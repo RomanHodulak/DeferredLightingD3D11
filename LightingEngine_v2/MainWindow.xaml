@@ -1,0 +1,56 @@
+﻿<Window xmlns:l="clr-namespace:LightingEngine_v2"  x:Class="LightingEngine_v2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Lighting engine" Height="720" Width="1280" Background="LightGray" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Storyboard x:Key="infoAnimation">
+            <DoubleAnimation Storyboard.TargetName="info" Storyboard.TargetProperty="(TextBlock.Opacity)" 
+                                                     From="0" To="1" Duration="0:0:0.25" BeginTime="0:0:0.0" DecelerationRatio="1" AutoReverse="False"  />
+            <DoubleAnimation Storyboard.TargetName="info" Storyboard.TargetProperty="(TextBlock.Opacity)" 
+                                                     From="1" To="0" Duration="0:0:0.25" BeginTime="0:0:2.0" DecelerationRatio="1" AutoReverse="False"  />
+        </Storyboard>
+    </Window.Resources>
+    <Grid Name="mainGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SizeChanged="Grid_SizeChanged">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="200" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Background="#F2F2F2" Grid.Column="2">
+            <TextBlock Margin="5" Text="Lighting system:"></TextBlock>
+            <StackPanel Orientation="Horizontal" Margin="5,0" HorizontalAlignment="Left">
+                <ToggleButton Name="forwardButton" IsChecked="True" Content="Forward" Click="ToggleButton_Click"></ToggleButton>
+                <ToggleButton Name="deferredButton" Content="Deferred" Click="ToggleButton_Click"></ToggleButton>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5,0" HorizontalAlignment="Left">
+                <ToggleButton Name="deferredQuadButton" Content="Quad Cull" Click="ToggleButton_Click"></ToggleButton>
+                <ToggleButton Name="deferredTiledButton" Content="Tile-Based" Click="ToggleButton_Click"></ToggleButton>
+            </StackPanel>
+            <StackPanel Margin="0, 5" Orientation="Horizontal" HorizontalAlignment="Left">
+                <TextBlock Margin="5" Text="Anti-Aliasing: "></TextBlock>
+                <ComboBox Margin="5, 0, 5, 0" SelectedIndex="0" Width="80" Height="22" SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBoxItem Content="None" Tag="1"></ComboBoxItem>
+                    <ComboBoxItem Content="2x MSAA" Tag="2"></ComboBoxItem>
+                    <ComboBoxItem Content="4x MSAA" Tag="4"></ComboBoxItem>
+                    <ComboBoxItem Content="8x MSAA" Tag="8"></ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <TextBlock Margin="5" Name="numLights" Text="Count of lights: "></TextBlock>
+            <Slider Name="lightSlider" Margin="5,0" Minimum="0" Maximum="1024" TickPlacement="None" TickFrequency="8" ValueChanged="Slider_ValueChanged" IsSnapToTickEnabled="True"></Slider>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Margin="5" Text="Light buffer size: "></TextBlock>
+                <TextBlock Margin="5" Name="mem" Text="0"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <TextBlock Margin="5" Text="Total render time: "></TextBlock>
+                <TextBlock Margin="5" Name="fps" Text="0"></TextBlock>
+            </StackPanel>
+        </StackPanel>
+        <GridSplitter HorizontalAlignment="Left" Name="gridSplitter1" Background="Transparent" Width="5" Margin="0" VerticalAlignment="Stretch" Grid.Column="1" />
+        <l:ViewportFrame HorizontalAlignment="Stretch" x:Name="Viewport" VerticalAlignment="Stretch" Margin="0,0,2,0" Stretch="Fill" />
+        <TextBlock Name="info" Text="Notification" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="25,0,0,25" FontSize="36">
+            <TextBlock.Effect>
+                <DropShadowEffect Color="#7F000000" ShadowDepth="0"></DropShadowEffect>
+            </TextBlock.Effect>
+        </TextBlock>
+    </Grid>
+</Window>
